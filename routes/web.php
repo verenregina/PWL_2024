@@ -52,4 +52,44 @@ Route::get('/user/{name?}', function ($name=null) {
 Route::get('/user/{name?}', function ($name='John') {
     return 'Nama saya '.$name;
     });
-        
+
+use App\Http\Controllers\WelcomeController;
+
+Route::get('/hello', [WelcomeController::class, 'hello']);
+
+// // // // // // // // // // // // // // // // // // // //
+use App\Http\Controllers\PageController;
+
+// Route ke halaman utama
+Route::get('/', [PageController::class, 'index']);
+
+// Route ke halaman about
+Route::get('/about', [PageController::class, 'about']);
+
+// Route ke halaman artikel dinamis berdasarkan ID
+Route::get('/articles/{id}', [PageController::class, 'articles']);
+
+// // // // // // // // // // // // // // // // // // // //
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArticleController;
+
+// Route untuk halaman utama (HomeController)
+Route::get('/', HomeController::class);
+
+// Route untuk halaman about (AboutController)
+Route::get('/about', AboutController::class);
+
+// Route untuk halaman artikel dinamis berdasarkan ID (ArticleController)
+Route::get('/articles/{id}', ArticleController::class);
+
+// // // // // // // // // // // // // // // // // // // //
+use App\Http\Controllers\PhotoController;
+
+Route::resource('photos', PhotoController::class)->only([
+    'index', 'show'
+]);
+
+Route::resource('photos', PhotoController::class)->except([
+    'create', 'store', 'update', 'destroy'
+]);
